@@ -25,18 +25,8 @@
 
 ---
 
-## ✨ Features
 
-- ⚡ Faster startup than the official Electron client
-- 🧠 Lower RAM usage
-- 🪟 Native Windows application written in C#
-- 🎨 Better integration with Windows APIs
-- 🚀 Lightweight and responsive interface
-- 🔄 Open-source and community-driven
-
----
-
-## 📥 Download
+## Download
 
 The latest builds are available on the **Releases** page:
 
@@ -50,7 +40,7 @@ By using or redistributing this project, you agree to:
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
 Because Discord's desktop client is proprietary software, FoxCord cannot include or replicate every desktop-specific feature.
 
@@ -58,7 +48,7 @@ Some functionality may differ from the official client, although compatibility a
 
 ---
 
-## 🤝 For Discord
+## For Discord
 
 If anyone from **Discord Inc.** has concerns regarding this project, or believes something should be changed or removed, please contact me.
 
@@ -71,7 +61,7 @@ I am happy to discuss and cooperate whenever necessary.
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the license included in this repository.
 
