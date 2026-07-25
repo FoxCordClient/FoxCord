@@ -6,9 +6,13 @@ using System.Windows.Forms;
 
 namespace FoxCord
 {
+    
     public partial class FoxCord : Form
     {
+        private readonly uint _showMessage;
+
         [DllImport("dwmapi.dll")]
+        
         private static extern int DwmSetWindowAttribute(
             IntPtr hwnd,
             int dwAttribute,
@@ -20,6 +24,7 @@ namespace FoxCord
         private bool exiting = false;
         public FoxCord()
         {
+            _showMessage = NativeMethods.RegisterWindowMessage(Program.WindowMessageName);
             InitializeComponent();
 
             trayManager = new SysTrayManager(this);
@@ -32,6 +37,38 @@ namespace FoxCord
                 sizeof(int));
         }
 
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == _showMessage)
+            {
+                MessageBox.Show(
+                    "Another FoxCord instance tried to start.",
+                    "FoxCord",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                if (NativeMethods.IsIconic(Handle))
+                    NativeMethods.ShowWindow(Handle, NativeMethods.SW_RESTORE);
+
+                WindowState = FormWindowState.Normal;
+                Show();
+                Activate();
+                BringToFront();
+
+                NativeMethods.BringWindowToTop(Handle);
+                NativeMethods.SetForegroundWindow(Handle);
+
+                TopMost = true;
+                TopMost = false;
+
+                Focus();
+
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
         private async void FoxCord_Load(object sender, EventArgs e)
         {
             // Inicializa o WebView2

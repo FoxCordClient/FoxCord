@@ -27,31 +27,14 @@ dotnet restore
 
 echo.
 echo ===============================
-echo Compilando x86...
+echo Compilando AnyCPU...
 echo ===============================
 
 dotnet publish ^
 -c %CONFIG% ^
 -f %FRAMEWORK% ^
--r win-x86 ^
 --self-contained false ^
--p:PublishSingleFile=true ^
--p:DebugType=None ^
--p:DebugSymbols=false ^
--p:ApplicationIcon=app.ico ^
--p:GenerateAssemblyInfo=true ^
--p:UseAppHost=true
-
-echo.
-echo ===============================
-echo Compilando x64...
-echo ===============================
-
-dotnet publish ^
--c %CONFIG% ^
--f %FRAMEWORK% ^
--r win-x64 ^
---self-contained false ^
+-p:Platform=AnyCPU ^
 -p:PublishSingleFile=true ^
 -p:DebugType=None ^
 -p:DebugSymbols=false ^
@@ -63,15 +46,11 @@ if not exist Release mkdir Release
 
 echo.
 echo ===============================
-echo Copiando arquivos...
+echo Copiando arquivo...
 echo ===============================
 
-for %%F in ("bin\%CONFIG%\%FRAMEWORK%\win-x86\publish\*.exe") do (
-    copy /Y "%%F" "Release\%%~nF_x86.exe" >nul
-)
-
-for %%F in ("bin\%CONFIG%\%FRAMEWORK%\win-x64\publish\*.exe") do (
-    copy /Y "%%F" "Release\%%~nF_x64.exe" >nul
+for %%F in ("bin\%CONFIG%\%FRAMEWORK%\publish\*.exe") do (
+    copy /Y "%%F" "Release\%%~nF_x86_64.exe" >nul
 )
 
 echo.
