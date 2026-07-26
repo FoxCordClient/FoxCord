@@ -15,8 +15,8 @@ namespace FoxCord
 
             trayMenu = new ContextMenuStrip();
 
-            var openItem = new ToolStripMenuItem("Open Discord", null, Open_Click);
-            var exitItem = new ToolStripMenuItem("Exit Discord", null, Exit_Click);
+            var openItem = new ToolStripMenuItem("Open FoxCord", null, Open_Click);
+            var exitItem = new ToolStripMenuItem("Exit FoxCord", null, Exit_Click);
 
             trayMenu.Items.Add(openItem);
             trayMenu.Items.Add(new ToolStripSeparator());

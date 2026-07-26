@@ -9,7 +9,7 @@ namespace FoxCord
 {
     public static class UpdateChecker
     {
-        public static readonly string CurrentVersionStr = "1.0.0";
+        public static readonly string CurrentVersionStr = "1.0.5";
 
         private const string GitHubApiUrl = "https://api.github.com/repos/FoxCordClient/FoxCord/releases/latest";
         private const string ReleasesUrl = "https://github.com/FoxCordClient/FoxCord/releases/latest";

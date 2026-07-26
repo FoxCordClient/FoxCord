@@ -30,6 +30,7 @@ namespace FoxCord
 
             trayManager = new SysTrayManager(this);
 
+
             int enabled = 1;
             DwmSetWindowAttribute(this.Handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref enabled, sizeof(int));
         }
@@ -60,6 +61,15 @@ namespace FoxCord
             }
 
             base.WndProc(ref m);
+        }
+
+
+        private void NavigateToMessage(string url)
+        {
+            WindowState = FormWindowState.Normal;
+            Show();
+            Activate();
+            webView21.CoreWebView2?.Navigate(url);
         }
 
         private async void FoxCord_Load(object sender, EventArgs e)
@@ -96,7 +106,6 @@ namespace FoxCord
                 webView21.CoreWebView2.Settings.AreDevToolsEnabled = false;
                 webView21.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false;
                 webView21.CoreWebView2.Settings.IsStatusBarEnabled = false;
-
                 webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
                 webView21.CoreWebView2.ProcessFailed += CoreWebView2_ProcessFailed;
 
