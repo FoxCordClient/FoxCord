@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|c:\\users\\pshns\\repos\\opdc\\foxcord\\foxcord\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|solutionrelative:foxcord\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|c:\\users\\pshns\\repos\\opdc\\foxcord\\foxcord\\update.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|solutionrelative:foxcord\\update.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|c:\\users\\pshns\\repos\\opdc\\foxcord\\foxcord\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|solutionrelative:foxcord\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2D00B798-84EF-C13D-C568-84A0B296FAD0}|FoxCord\\FoxCord.csproj|c:\\users\\pshns\\repos\\opdc\\foxcord\\foxcord\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,13 +42,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "update.cs",
               "DocumentMoniker": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\update.cs",
               "RelativeDocumentMoniker": "FoxCord\\update.cs",
               "ToolTip": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\update.cs",
               "RelativeToolTip": "FoxCord\\update.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAYwEsAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-26T01:23:39.577Z",
               "EditorCaption": ""
@@ -56,14 +56,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Form1.cs [Projeto]",
+              "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs",
               "RelativeDocumentMoniker": "FoxCord\\Form1.cs",
-              "ToolTip": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs [Projeto]*",
-              "RelativeToolTip": "FoxCord\\Form1.cs [Projeto]*",
+              "ToolTip": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs [Design]",
+              "RelativeToolTip": "FoxCord\\Form1.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-25T22:19:34.907Z",
-              "EditorCaption": " [Projeto]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -75,8 +75,7 @@
               "RelativeToolTip": "FoxCord\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-25T22:12:51.369Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-25T22:12:51.369Z"
             },
             {
               "$type": "Document",
@@ -92,12 +91,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs",
               "RelativeDocumentMoniker": "FoxCord\\Form1.cs",
-              "ToolTip": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs*",
-              "RelativeToolTip": "FoxCord\\Form1.cs*",
+              "ToolTip": "C:\\Users\\PshNs\\repos\\Opdc\\FoxCord\\FoxCord\\Form1.cs",
+              "RelativeToolTip": "FoxCord\\Form1.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAUwEkAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-25T21:19:51.177Z",
