@@ -56,7 +56,7 @@
             Name = "FoxCord";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FoxCord";
-            Load += FoxCord_Load;
+            Shown += FoxCord_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }

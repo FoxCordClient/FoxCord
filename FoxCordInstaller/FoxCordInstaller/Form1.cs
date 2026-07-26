@@ -83,7 +83,7 @@ namespace FoxCordInstaller
                     client.DefaultRequestHeaders.Add("User-Agent", "FoxCord-Installer");
 
                     // 1. Consulta o JSON da última release no GitHub API
-                    string apiUrl = "https://api.github.com/repos/PshNsDev/FoxCord/releases/latest";
+                    string apiUrl = "https://api.github.com/repos/FoxCordClient/FoxCord/releases/latest";
                     string jsonResponse = await client.GetStringAsync(apiUrl);
 
                     // Parse do JSON retornado pela API
@@ -122,7 +122,7 @@ namespace FoxCordInstaller
                         // Caso 'fxcd.zip' não tenha sido encontrado explicitamente no JSON, monta a URL de fallback padrão
                         if (string.IsNullOrEmpty(downloadUrl))
                         {
-                            downloadUrl = $"https://github.com/PshNsDev/FoxCord/releases/download/{tagElement.GetString()}/fxcd.zip";
+                            downloadUrl = $"https://github.com/FoxCordClient/FoxCord/releases/download/{tagElement.GetString()}/fxcd.zip";
                         }
 
                         installlab.Text = $"Downloading FoxCord v{appVersion}...";
