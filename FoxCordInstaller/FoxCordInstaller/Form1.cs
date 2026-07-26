@@ -1,10 +1,12 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -63,7 +65,7 @@ namespace FoxCordInstaller
             return r | (g << 8) | (b << 16);
         }
 
-        // ================= ETAPA 1: Preparação (Verificar Internet e Baixar) =================
+        // ================= ETAPA 1: Preparação (Verificar API GitHub e Baixar) =================
         private async Task IniciarPreparacaoDownloadAsync()
         {
             installlab.Text = "Checking internet connection...";
@@ -77,28 +79,64 @@ namespace FoxCordInstaller
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    // Define um User-Agent (Boa prática ao fazer requisições web)
+                    // O GitHub exige um User-Agent válido para chamadas na API
                     client.DefaultRequestHeaders.Add("User-Agent", "FoxCord-Installer");
 
-                    // 1. Pega a versão online do ver.txt
-                    string verUrl = "https://www.github.com/PshNsDev/FoxCord/raw/refs/heads/main/ver.txt";
-                    string versionContent = await client.GetStringAsync(verUrl);
+                    // 1. Consulta o JSON da última release no GitHub API
+                    string apiUrl = "https://api.github.com/repos/PshNsDev/FoxCord/releases/latest";
+                    string jsonResponse = await client.GetStringAsync(apiUrl);
 
-                    // Limpa espaços ou quebras de linha para garantir que é só o número
-                    appVersion = versionContent.Trim();
-
-                    installlab.Text = $"Downloading FoxCord v{appVersion}...";
-
-                    // 2. Constrói o URL de download do Release no Github e baixa o fxcd.zip
-                    string downloadUrl = $"https://github.com/PshNsDev/FoxCord/releases/download/{appVersion}/fxcd.zip";
-                    tempZipPath = Path.Combine(Path.GetTempPath(), "fxcd.zip");
-
-                    using (var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+                    // Parse do JSON retornado pela API
+                    using (JsonDocument doc = JsonDocument.Parse(jsonResponse))
                     {
-                        response.EnsureSuccessStatusCode();
-                        using (var fs = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        JsonElement root = doc.RootElement;
+
+                        // Obtém a versão a partir do "tag_name" (ex: "v1.0.0" ou "1.0.0")
+                        if (root.TryGetProperty("tag_name", out JsonElement tagElement))
                         {
-                            await response.Content.CopyToAsync(fs);
+                            appVersion = tagElement.GetString()?.Trim().TrimStart('v') ?? "1.0.0";
+                        }
+                        else
+                        {
+                            throw new Exception("Não foi possível identificar a tag da última versão.");
+                        }
+
+                        // Localiza a URL de download do 'fxcd.zip' na lista de assets do JSON
+                        string downloadUrl = "";
+                        if (root.TryGetProperty("assets", out JsonElement assetsElement) && assetsElement.ValueKind == JsonValueKind.Array)
+                        {
+                            foreach (JsonElement asset in assetsElement.EnumerateArray())
+                            {
+                                if (asset.TryGetProperty("name", out JsonElement nameElement) &&
+                                    nameElement.GetString()?.Equals("fxcd.zip", StringComparison.OrdinalIgnoreCase) == true)
+                                {
+                                    if (asset.TryGetProperty("browser_download_url", out JsonElement downloadUrlElement))
+                                    {
+                                        downloadUrl = downloadUrlElement.GetString() ?? "";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Caso 'fxcd.zip' não tenha sido encontrado explicitamente no JSON, monta a URL de fallback padrão
+                        if (string.IsNullOrEmpty(downloadUrl))
+                        {
+                            downloadUrl = $"https://github.com/PshNsDev/FoxCord/releases/download/{tagElement.GetString()}/fxcd.zip";
+                        }
+
+                        installlab.Text = $"Downloading FoxCord v{appVersion}...";
+
+                        // 2. Baixa o arquivo zip da release
+                        tempZipPath = Path.Combine(Path.GetTempPath(), "fxcd.zip");
+
+                        using (var response = await client.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+                        {
+                            response.EnsureSuccessStatusCode();
+                            using (var fs = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                            {
+                                await response.Content.CopyToAsync(fs);
+                            }
                         }
                     }
                 }
@@ -108,12 +146,12 @@ namespace FoxCordInstaller
             }
             catch (HttpRequestException)
             {
-                MessageBox.Show("Não foi possível conectar à internet ou encontrar a versão. Verifique sua conexão e tente novamente.", "Sem Conexão Online", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível conectar à internet ou obter os dados da release no GitHub. Verifique sua conexão e tente novamente.", "Sem Conexão Online", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Ocorreu um erro ao baixar os arquivos: " + ex.Message, "Erro de Download", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Ocorreu um erro ao verificar/baixar os arquivos: " + ex.Message, "Erro de Download", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

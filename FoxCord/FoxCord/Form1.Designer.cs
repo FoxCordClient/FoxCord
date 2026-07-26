@@ -41,7 +41,7 @@
             webView21.Dock = DockStyle.Fill;
             webView21.Location = new Point(0, 0);
             webView21.Name = "webView21";
-            webView21.Size = new Size(935, 537);
+            webView21.Size = new Size(1138, 743);
             webView21.TabIndex = 0;
             webView21.ZoomFactor = 1D;
             webView21.Click += webView21_Click;
@@ -50,10 +50,11 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(935, 537);
+            ClientSize = new Size(1138, 743);
             Controls.Add(webView21);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FoxCord";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FoxCord";
             Load += FoxCord_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();

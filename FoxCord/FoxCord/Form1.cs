@@ -79,6 +79,9 @@ namespace FoxCord
 
             // Carrega o Discord
             webView21.CoreWebView2.Navigate("https://discord.com/app");
+
+            // Verifica atualizações em segundo plano
+            _ = UpdateChecker.CheckForUpdatesAsync();
         }
 
 
