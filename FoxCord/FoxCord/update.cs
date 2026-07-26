@@ -8,20 +8,17 @@ namespace FoxCord
 {
     public static class UpdateChecker
     {
-        // Altere esta variável conforme atualizar a versão do app local
-        public static readonly string CurrentVersionStr = "0.7.1";
+        public static readonly string CurrentVersionStr = "0.7.2";
 
         private const string GitHubApiUrl = "https://api.github.com/repos/PshNsDev/FoxCord/releases/latest";
 
         /// <summary>
-        /// Verifica de forma assíncrona se há novas atualizações no GitHub.
         /// </summary>
         public static async Task CheckForUpdatesAsync()
         {
             try
             {
                 using var client = new HttpClient();
-                // O GitHub requer um User-Agent na requisição
                 client.DefaultRequestHeaders.Add("User-Agent", "FoxCord-UpdateChecker");
 
                 var response = await client.GetAsync(GitHubApiUrl);
@@ -42,7 +39,6 @@ namespace FoxCord
             }
             catch (HttpRequestException)
             {
-                // Erro de conexão com a internet
                 MessageBox.Show(
                     "Unable to check for updates. Please check your Wi-Fi or internet connection.",
                     "FoxCord - Connection Error",
@@ -51,14 +47,12 @@ namespace FoxCord
             }
             catch (Exception ex)
             {
-                // Tratamento genérico caso ocorra erro ao processar dados
                 System.Diagnostics.Debug.WriteLine($"Update check error: {ex.Message}");
             }
         }
 
         private static void CompareVersions(string localVerStr, string onlineTag)
         {
-            // Remove o prefixo 'v' ou 'V' se existir (ex: "v1.0.0" -> "1.0.0")
             string cleanLocal = localVerStr.TrimStart('v', 'V');
             string cleanOnline = onlineTag.TrimStart('v', 'V');
 
@@ -72,7 +66,6 @@ namespace FoxCord
 
             if (result < 0)
             {
-                // Versão local é menor que a online (há atualização)
                 MessageBox.Show(
                     $"Hey, Updates out you are on {localVerStr} and the latest version is {onlineTag}",
                     "FoxCord - Update Available",
@@ -81,14 +74,13 @@ namespace FoxCord
             }
             else if (result > 0)
             {
-                // Versão local é maior que a versão online
                 MessageBox.Show(
                     "Hey, you recompiled the FoxCord right? or not? hm idk",
                     "FoxCord",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Question);
             }
-            // Se result == 0 (versões iguais), não faz nada.
+            
         }
     }
 }

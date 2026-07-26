@@ -71,17 +71,22 @@ namespace FoxCord
         }
         private async void FoxCord_Load(object sender, EventArgs e)
         {
-            // Inicializa o WebView2
             await webView21.EnsureCoreWebView2Async();
-
-            // Qualquer janela nova abre no navegador padrão
+            webView21.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false; // Botão direito
+            webView21.CoreWebView2.Settings.AreDevToolsEnabled = false;             // F12 / DevTools
+            webView21.CoreWebView2.Settings.AreBrowserAcceleratorKeysEnabled = false; // F12, Ctrl+Shift+I, etc.
+            webView21.CoreWebView2.Settings.IsStatusBarEnabled = false;             // Barra inferior com links
             webView21.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-
-            // Carrega o Discord
             webView21.CoreWebView2.Navigate("https://discord.com/app");
 
-            // Verifica atualizações em segundo plano
             _ = UpdateChecker.CheckForUpdatesAsync();
+        }
+
+        private void CoreWebView2_AcceleratorKeyPressed(
+            object? sender,
+            Microsoft.Web.WebView2.Core.CoreWebView2AcceleratorKeyPressedEventArgs e)
+        {
+            e.Handled = true;
         }
 
 
