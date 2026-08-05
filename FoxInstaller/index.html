@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoxCord Installer</title>
+  <!-- Tailwind CSS CDN for modern responsive design -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    body {
+      -webkit-app-region: drag;
+      user-select: none;
+      -webkit-user-select: none;
+      font-family: 'GG Sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      background-color: #1e1f22; /* Discord Dark Theme background */
+    }
+
+    .no-drag {
+      -webkit-app-region: no-drag;
+    }
+
+    /* Heartbeat keyframe animation for FoxCord logo */
+    @keyframes heartbeat {
+      0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0px rgba(88, 101, 242, 0));
+      }
+      14% {
+        transform: scale(1.12);
+        filter: drop-shadow(0 0 12px rgba(88, 101, 242, 0.4));
+      }
+      28% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px rgba(88, 101, 242, 0.1));
+      }
+      42% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 8px rgba(88, 101, 242, 0.3));
+      }
+      70% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0px rgba(88, 101, 242, 0));
+      }
+      100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0px rgba(88, 101, 242, 0));
+      }
+    }
+
+    .heartbeat-logo {
+      animation: heartbeat 1.8s infinite ease-in-out;
+      transform-origin: center center;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="w-screen h-screen flex flex-col justify-center items-center m-0 p-6 text-white select-none relative border border-[#2b2d31]">
+
+  <div class="flex flex-col items-center justify-center space-y-4 w-full no-drag">
+    
+    <!-- Form Icon Container -->
+    <div class="relative w-16 h-16 flex items-center justify-center">
+      <img 
+        id="app-logo" 
+        src="app.ico" 
+        alt="App Icon" 
+        class="w-14 h-14 object-contain heartbeat-logo"
+        onerror="handleIconError(this)"
+      />
+    </div>
+
+    <!-- Status message & progress bar container -->
+    <div class="text-center space-y-3 w-full flex flex-col items-center">
+      <!-- Status message -->
+      <p id="status-text" class="text-xs font-medium tracking-wide text-gray-300 transition-all duration-200 min-h-[1.25rem]">
+        Checking for updates...
+      </p>
+
+      <!-- Smaller progress bar container directly under status text (hidden until called) -->
+      <div id="progress-container" class="w-48 space-y-1 hidden flex-col items-center">
+        <div class="w-full bg-[#2b2d31] h-1.5 rounded-full overflow-hidden border border-[#35363c]">
+          <div 
+            id="progress-bar" 
+            class="bg-indigo-500 h-full rounded-full transition-all duration-300 ease-out w-0 shadow-[0_0_8px_rgba(99,102,241,0.5)]"
+          ></div>
+        </div>
+        
+        <div class="flex justify-end w-full text-[10px] text-gray-400 font-mono px-0.5">
+          <span id="progress-percent">0%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function handleIconError(img) {
+      // Fallback app icon SVG if app.ico is missing
+      const svgFallback = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%236366f1"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V7h14v12zm-2-7H7v-2h10v2z"/></svg>';
+      img.onerror = null;
+      img.src = svgFallback;
+    }
+
+    const statusEl = document.getElementById('status-text');
+    const progressBar = document.getElementById('progress-bar');
+    const progressPercent = document.getElementById('progress-percent');
+    const progressContainer = document.getElementById('progress-container');
+
+    // Update status text and manage progress bar visibility
+    function setUpdateState(data) {
+      if (typeof data === 'string') {
+        statusEl.innerText = data;
+        return;
+      }
+
+      if (data.message) {
+        statusEl.innerText = data.message;
+      }
+
+      if (typeof data.percent === 'number' && data.percent >= 0) {
+        // Show progress bar only when update progress is reported
+        if (progressContainer) {
+          progressContainer.classList.remove('hidden');
+          progressContainer.classList.add('flex');
+        }
+        const clamped = Math.min(100, Math.max(0, data.percent));
+        progressBar.style.width = `${clamped}%`;
+        progressPercent.innerText = `${clamped}%`;
+      } else if (progressContainer) {
+        // Hide progress bar when not actively downloading/updating
+        progressContainer.classList.add('hidden');
+        progressContainer.classList.remove('flex');
+      }
+    }
+
+    // Listen for events from Electron IPC bridge
+    if (window.electronAPI && window.electronAPI.onUpdateStatus) {
+      window.electronAPI.onUpdateStatus((event, data) => {
+        setUpdateState(data);
+      });
+    }
+  </script>
+</body>
+</html>

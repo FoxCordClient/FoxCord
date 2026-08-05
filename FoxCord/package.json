@@ -1,0 +1,29 @@
+{
+  "name": "foxcord",
+  "version": "1.2.1",
+  "main": "foxcord.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --dir"
+  },
+  "build": {
+    "appId": "com.foxcord.app",
+    "productName": "FoxCord",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!node_modules/.cache/**"
+    ],
+    "win": {
+      "target": "dir",
+      "icon": "app.ico"
+    }
+  },
+  "devDependencies": {
+    "electron": "^43.3.0",
+    "electron-builder": "^26.0.0"
+  }
+}

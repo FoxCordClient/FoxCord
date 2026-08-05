@@ -1,0 +1,36 @@
+{
+  "name": "foxcordinstaller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "install.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable",
+    "release": "electron-builder --win portable --x64"
+  },
+  "build": {
+    "appId": "com.foxcord.installer",
+    "productName": "FoxCord Installer",
+    "asar": true,
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!node_modules/.cache/**"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "app.ico"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3"
+  },
+  "dependencies": {
+    "adm-zip": "^0.6.0"
+  }
+}
