@@ -1,13 +1,7 @@
 # FoxCord
 
 > [!WARNING]
-> **FoxCord is NOT an official Discord client.**
->
-> FoxCord is an independent project built with **C#** and **Microsoft WebView2**, replacing **Electron** with the goal of improving startup speed, reducing memory usage, and providing a more native Windows experience.
->
-> The official Discord desktop client is **closed source**. Because of this, some proprietary desktop features cannot be reproduced exactly and may be unavailable. Whenever possible, compatible alternatives or original implementations may be added in future releases yeah idk.
->
-> FoxCord is **not affiliated with, endorsed by, or sponsored by Discord Inc.**
+> **FoxCord is NOT getting more updates**
 
 <p align="center">
     <img src="assets/app.png" alt="FoxCord Logo" width="180">
