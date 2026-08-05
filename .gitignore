@@ -1,0 +1,7 @@
+FoxCord/dist
+FoxCord/node_modules
+FoxInstaller/dist
+FoxInstaller/node_modules
+notaprompt/
+push.bat
+release/
